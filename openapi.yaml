@@ -1,0 +1,88 @@
+openapi: '3.0.3'
+info:
+  version: 1.0.0
+  title: Dialog Flow
+servers:
+  - description: Local server
+    url: 'http://localhost:4000'
+
+paths:
+  /intent:
+    post:
+      summary: Detect intents
+      operationId: detectIntents
+      x-@id: evolvable:detectIntents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-@type: evolvable:DetectIntentsQuery
+              properties:
+                projectId:
+                  type: string
+                  x-@id: evolvable:projectId
+                sessionId:
+                  type: string
+                  x-@id: evolvable:sessionId
+                query:
+                  type: string
+                  x-@id: evolvable:query
+                context:
+                  x-@id: evolvable:context
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Context'
+                languageCode:
+                  type: string
+                  x-@id: evolvable:languageCode
+              required: [ 'projectId', 'sessionId', 'query', 'languageCode' ]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                x-@type: evolvable:IntentsDetected
+                properties:
+                  fulfillmentText:
+                    type: string
+                    x-@id: evolvable:fulfillmentText
+                  context:
+                    x-@id: evolvable:contexts
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Context'
+                        
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    default: Your request body must include the projectId, sessionId, query, context, and language code variables
+                    
+components:
+  schemas:
+    Context:
+      x-@type: evolvable:IContext
+      type: object
+      properties:
+        name:
+          x-@id: evolvable:name
+          type: string
+        lifespanCount:
+          x-@id: evolvable:lifespanCount
+          type: number
+                  
+# json-LD context
+x-@context:
+  x-@context: '@context'
+  x-@id: '@id'
+  x-@type: '@type'
+  x-@relation: 'dce:relation'
+  evolvable: 'https://github.com/evolvable-by-design/use-cases/dialog-flow/vocab#'
