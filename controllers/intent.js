@@ -66,9 +66,9 @@ async function executeQuery (
       `Fulfillment Text: ${intentResponse.queryResult.fulfillmentText}`
     )
     return {
-      fulfillmentText: intentResponse.queryResult.fulfillmentText,
-      context: intentResponse.queryResult.outputContexts
+      intentResponse: intentResponse
     }
+    // return intentResponse
   } catch (error) {
     console.log(error)
   }

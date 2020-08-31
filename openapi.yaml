@@ -46,14 +46,30 @@ paths:
                 type: object
                 x-@type: evolvable:IntentsDetected
                 properties:
-                  fulfillmentText:
-                    type: string
-                    x-@id: evolvable:fulfillmentText
-                  context:
-                    x-@id: evolvable:contexts
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Context'
+                  intentResponse:
+                    x-@id: evolvable:intentResponse
+                    type: object
+                    properties:
+                      responseId:
+                        type: string
+                        x-@id: evolvable:requestId
+                      queryResult:
+                        x-@id: evolvable:queryResult
+                        type: object
+                        properties:
+                          queryText:
+                            type: string
+                          languageCode:
+                            type: string
+                            x-@id: evolvable:languageCode
+                          fulfillmentText:
+                            type: string
+                            x-@id: evolvable:fulfillmentText
+                          outputContexts:
+                            x-@id: evolvable:contexts
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/Context'
                         
         '400':
           description: Incorrect request
