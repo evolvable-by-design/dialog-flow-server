@@ -12,7 +12,7 @@ const port = 4000
 
 const app = express()
 
-app.use(cors({ preflightContinue: true }))
+app.use(cors({ preflightContinue: true, methods: '*' }))
 app.options('/', (_, res) => res.status(200).json(apiDocumentation))
 app.options('*', cors())
 

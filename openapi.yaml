@@ -49,10 +49,11 @@ paths:
                   intentResponse:
                     x-@id: evolvable:intentResponse
                     type: object
+                    x-affiliation: parent
                     properties:
                       responseId:
                         type: string
-                        x-@id: evolvable:requestId
+                        x-@id: evolvable:responseId
                       queryResult:
                         x-@id: evolvable:queryResult
                         type: object
