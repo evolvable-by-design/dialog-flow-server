@@ -1,26 +1,26 @@
-const dialogflow = require('dialogflow');
+const dialogflow = require('dialogflow')
 
-function getSession() {
+function getSession () {
   const config = {
     credentials: {
       private_key: process.env.DIALOGFLOW_PRIVATE_KEY,
       client_email: process.env.DIALOGFLOW_CLIENT_EMAIL
     }
-  };
+  }
 
-  return new dialogflow.SessionsClient(config);
+  return new dialogflow.SessionsClient(config)
 }
 
-async function detectIntent(
+async function detectIntent (
   projectId,
   sessionId,
   query,
   contexts,
   languageCode
 ) {
-  const sessionClient = getSession();
+  const sessionClient = getSession()
   // The path to identify the agent that owns the created intent.
-  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+  const sessionPath = sessionClient.sessionPath(projectId, sessionId)
 
   // The text query request.
   const request = {
@@ -31,55 +31,55 @@ async function detectIntent(
         languageCode: languageCode
       }
     }
-  };
+  }
 
   if (contexts && contexts.length > 0) {
     request.queryParams = {
       contexts: contexts
-    };
+    }
   }
 
-  const responses = await sessionClient.detectIntent(request);
-  return responses[0];
+  const responses = await sessionClient.detectIntent(request)
+  return responses[0]
 }
 
-async function executeQuery(
+async function executeQuery (
   projectId,
   sessionId,
   query,
   context,
   languageCode
 ) {
-  let intentResponse;
+  let intentResponse
 
   try {
-    console.log(`Sending Query: ${query}`);
+    console.log(`Sending Query: ${query}`)
     intentResponse = await detectIntent(
       projectId,
       sessionId,
       query,
       context,
       languageCode
-    );
-    console.log('Detected intent');
+    )
+    console.log('Detected intent')
     console.log(
       `Fulfillment Text: ${intentResponse.queryResult.fulfillmentText}`
-    );
-    return intentResponse;
+    )
+    return intentResponse
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
 module.exports = {
   detectIntent: async (req, res, next) => {
-    const { projectId, sessionId, query, context, languageCode } = req.body;
+    const { projectId, sessionId, query, context, languageCode } = req.body
 
     if (!projectId || !sessionId || !query || !languageCode) {
       return res.status(400).send({
         message:
           'Your request body must include the projectId, sessionId, query, context, and language code variables'
-      });
+      })
     }
 
     const intentResponse = await executeQuery(
@@ -88,8 +88,12 @@ module.exports = {
       query,
       context,
       languageCode
-    );
+    )
 
+<<<<<<< HEAD
     res.status(200).json(intentResponse);
+=======
+    res.status(200).json(intentResponse)
+>>>>>>> 0896a05... Report cors addition and the set-up of returning a 200 status code for calls to the detectIntent api endpoint from commit 2b8b301 of master
   }
-};
+}

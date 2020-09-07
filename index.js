@@ -1,22 +1,27 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const intentRoute = require('./routes/intent');
-require('dotenv').config();
+const express = require('express')
+const path = require('path')
+const YAML = require('yamljs')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const intentRoute = require('./routes/intent')
+require('dotenv').config()
 
-const port = 4000;
+const apiDocumentation = YAML.load(path.join(__dirname, '/openapi.yaml'))
 
-const app = express();
+const port = 4000
 
-app.use(cors());
-app.options('*', cors());
+const app = express()
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({ preflightContinue: true, methods: '*' }))
+app.options('/', (_, res) => res.status(200).json(apiDocumentation))
+app.options('*', cors())
 
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/', (req, res) => res.send('Hello World!!'));
+app.use(bodyParser.json())
 
-app.use('/intent', intentRoute);
+app.get('/', (req, res) => res.send('Hello World!!'))
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.use('/intent', intentRoute)
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
