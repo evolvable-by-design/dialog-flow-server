@@ -90,10 +90,6 @@ module.exports = {
       languageCode
     )
 
-<<<<<<< HEAD
     res.status(200).json(intentResponse);
-=======
-    res.status(200).json(intentResponse)
->>>>>>> 0896a05... Report cors addition and the set-up of returning a 200 status code for calls to the detectIntent api endpoint from commit 2b8b301 of master
   }
 }
