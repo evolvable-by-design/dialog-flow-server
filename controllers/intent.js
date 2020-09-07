@@ -65,10 +65,7 @@ async function executeQuery (
     console.log(
       `Fulfillment Text: ${intentResponse.queryResult.fulfillmentText}`
     )
-    return {
-      intentResponse: intentResponse
-    }
-    // return intentResponse
+    return intentResponse
   } catch (error) {
     console.log(error)
   }

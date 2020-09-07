@@ -44,33 +44,28 @@ paths:
             application/json:
               schema:
                 type: object
-                x-@type: evolvable:IntentsDetected
+                x-@id: evolvable:intentResponse
                 properties:
-                  intentResponse:
-                    x-@id: evolvable:intentResponse
+                  responseId:
+                    type: string
+                    x-@id: evolvable:responseId
+                  queryResult:
+                    x-@id: evolvable:queryResult
                     type: object
-                    x-affiliation: parent
                     properties:
-                      responseId:
+                      queryText:
                         type: string
-                        x-@id: evolvable:responseId
-                      queryResult:
-                        x-@id: evolvable:queryResult
-                        type: object
-                        properties:
-                          queryText:
-                            type: string
-                          languageCode:
-                            type: string
-                            x-@id: evolvable:languageCode
-                          fulfillmentText:
-                            type: string
-                            x-@id: evolvable:fulfillmentText
-                          outputContexts:
-                            x-@id: evolvable:contexts
-                            type: array
-                            items:
-                              $ref: '#/components/schemas/Context'
+                      languageCode:
+                        type: string
+                        x-@id: evolvable:languageCode
+                      fulfillmentText:
+                        type: string
+                        x-@id: evolvable:fulfillmentText
+                      outputContexts:
+                        x-@id: evolvable:contexts
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Context'
                         
         '400':
           description: Incorrect request
